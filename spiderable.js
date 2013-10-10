@@ -46,14 +46,15 @@ WebApp.connectHandlers.use(function (req, res, next) {
           "    if (typeof Meteor !== 'undefined' " +
           "        && typeof(Meteor.status) !== 'undefined' " +
           "        && Meteor.status().connected) {" +
-          "      Deps.flush();" +
-          "      return DDP._allSubscriptionsReady();" +
+          "      var rd =  DDP._allSubscriptionsReady();" +
+          "      if(rd){Deps.flush()};" +
+          "      if(document.body.childNodes.length > 0){return rd};" +
           "    }" +
           "    return false;" +
           "  });" +
           "  if (ready) {" +
           "    var response = page.evaluate(function() {" +
-          "        return Spiderable;" +
+          "        return Meteor.Spiderable;" +
           "    });" +
           "    if(response.httpStatusCode != 200 " + 
           "       || Object.keys(response.httpHeaders).length > 0) {" +
