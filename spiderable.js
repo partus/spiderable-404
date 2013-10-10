@@ -47,8 +47,7 @@ WebApp.connectHandlers.use(function (req, res, next) {
           "        && typeof(Meteor.status) !== 'undefined' " +
           "        && Meteor.status().connected) {" +
           "      var rd =  DDP._allSubscriptionsReady();" +
-          "      if(rd){Deps.flush()};" +
-          "      if(document.body.childNodes.length > 0){return rd};" +
+          "      if(rd && document.body.childNodes.length > 0){Deps.flush(); return rd};" +
           "    }" +
           "    return false;" +
           "  });" +
