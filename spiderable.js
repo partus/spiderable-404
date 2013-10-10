@@ -16,7 +16,7 @@ Spiderable.userAgentRegExps = [
 
 
 // how long to let phantomjs run before we kill it
-var REQUEST_TIMEOUT = 60*1000;
+var REQUEST_TIMEOUT = 100*1000;
 
 WebApp.connectHandlers.use(function (req, res, next) {
   if (/\?.*_escaped_fragment_=/.test(req.url) ||
