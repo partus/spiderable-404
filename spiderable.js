@@ -16,7 +16,7 @@ Spiderable.userAgentRegExps = [
 
 
 // how long to let phantomjs run before we kill it
-var REQUEST_TIMEOUT = 20*1000;
+var REQUEST_TIMEOUT = 60*1000;
 
 WebApp.connectHandlers.use(function (req, res, next) {
   if (/\?.*_escaped_fragment_=/.test(req.url) ||
@@ -52,9 +52,6 @@ WebApp.connectHandlers.use(function (req, res, next) {
           "    return false;" +
           "  });" +
           "  if (ready) {" +
-          "    var response = page.evaluate(function() {" +
-          "        return Meteor.Spiderable;" +
-          "    });" +
           "    var out = page.content;" +
           "    out = out.replace(/<script[^>]+>(.|\\n|\\r)*?<\\/script\\s*>/ig, '');" +
           "    out = out.replace('<meta name=\"fragment\" content=\"!\">', '');" +
