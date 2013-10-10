@@ -16,7 +16,7 @@ Spiderable.userAgentRegExps = [
 
 
 // how long to let phantomjs run before we kill it
-var REQUEST_TIMEOUT = 15*1000;
+var REQUEST_TIMEOUT = 20*1000;
 
 WebApp.connectHandlers.use(function (req, res, next) {
   if (/\?.*_escaped_fragment_=/.test(req.url) ||
@@ -47,7 +47,7 @@ WebApp.connectHandlers.use(function (req, res, next) {
           "        && typeof(Meteor.status) !== 'undefined' " +
           "        && Meteor.status().connected) {" +
           "      var rd =  DDP._allSubscriptionsReady();" +
-          "      if(rd && document.body.childNodes.length > 0){Deps.flush(); return rd};" +
+          "      if(rd){Deps.flush(); if(document.body.childNodes.length > 0) return rd};" +
           "    }" +
           "    return false;" +
           "  });" +
@@ -55,18 +55,13 @@ WebApp.connectHandlers.use(function (req, res, next) {
           "    var response = page.evaluate(function() {" +
           "        return Meteor.Spiderable;" +
           "    });" +
-          "    if(response.httpStatusCode != 200 " + 
-          "       || Object.keys(response.httpHeaders).length > 0) {" +
-          "      console.log('<!-- HTTP-RESPONSE:' + response.httpStatusCode + ' ' " +
-          "             + JSON.stringify(response.httpHeaders) + ' -->');" +
-          "    }" +
           "    var out = page.content;" +
           "    out = out.replace(/<script[^>]+>(.|\\n|\\r)*?<\\/script\\s*>/ig, '');" +
           "    out = out.replace('<meta name=\"fragment\" content=\"!\">', '');" +
           "    console.log(out);" +
           "    phantom.exit();" +
           "  }" +
-          "}, 100);\n";
+          "}, 200);\n";
 
     // Run phantomjs.
     //
