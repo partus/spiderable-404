@@ -30,7 +30,8 @@ WebApp.connectHandlers.use(function (req, res, next) {
     delete parsedQuery['_escaped_fragment_'];
     var newQuery = querystring.stringify(parsedQuery);
     var newPath = parsedUrl.pathname + (newQuery ? ('?' + newQuery) : '');
-    var url = req.url; // "http://" + req.headers.host + newPath;
+    parsedQuery.is_phantom = "true"; 
+    var url =  "http://" + req.headers.host + newPath;
 
     // This string is going to be put into a bash script, so it's important
     // that 'url' (which comes from the network) can neither exploit phantomjs
