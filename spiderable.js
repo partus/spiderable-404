@@ -28,9 +28,9 @@ WebApp.connectHandlers.use(function (req, res, next) {
     var parsedUrl = urlParser.parse(req.url);
     var parsedQuery = querystring.parse(parsedUrl.query);
     delete parsedQuery['_escaped_fragment_'];
+    parsedQuery.is_phantom = "true"; 
     var newQuery = querystring.stringify(parsedQuery);
     var newPath = parsedUrl.pathname + (newQuery ? ('?' + newQuery) : '');
-    parsedQuery.is_phantom = "true"; 
     var url =  "http://" + req.headers.host + newPath;
 
     // This string is going to be put into a bash script, so it's important
