@@ -8,6 +8,7 @@ Package.on_use(function (api) {
   api.use(['underscore'], ['client', 'server']);
 
   api.export('Spiderable', 'server');
+  api.export('Spiderable', 'client');
 
   api.add_files(['spiderable.html', 'client.js'], 'client');
   api.add_files('spiderable.js', 'server');
